@@ -5,7 +5,8 @@ import prisma from "@/lib/prisma";
 import streamServerClient from "@/lib/stream";
 import { signUpSchema, SignUpValues } from "@/lib/validation";
 import { hash } from "@node-rs/argon2";
-import { generateIdFromEntropySize } from "lucia";
+// import { generateIdFromEntropySize } from "lucia";
+import { ObjectId } from "mongodb";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -23,7 +24,8 @@ export async function signUp(
       parallelism: 1,
     });
 
-    const userId = generateIdFromEntropySize(10);
+    // const userId = generateIdFromEntropySize(10);
+    const userId = new ObjectId().toString();
 
     const existingUsername = await prisma.user.findFirst({
       where: {
