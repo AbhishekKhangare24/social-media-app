@@ -9,6 +9,7 @@ import { generateIdFromEntropySize } from "lucia";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { ObjectId } from "mongodb";
 
 export async function signUp(
   credentials: SignUpValues,
@@ -23,7 +24,8 @@ export async function signUp(
       parallelism: 1,
     });
 
-    const userId = generateIdFromEntropySize(10);
+    // const userId = generateIdFromEntropySize(10);
+    const userId = new ObjectId().toString();
 
     const existingUsername = await prisma.user.findFirst({
       where: {
